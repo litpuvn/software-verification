@@ -9,14 +9,19 @@ class SimpleTestCase(unittest.TestCase):
         self.foo = "test"
         #self.file = open("blah", "r")
 
+        print("1. Setup parameters")
+
 
     def tearDown(self):
 
         """Call after every test case."""
         ##self.file.close()
+        print("2. Destroy instances")
 
 
     def testA(self):
+        print("3. Running test")
+
         assert self.foo == "test"
 
 
