@@ -64,6 +64,19 @@ class PhoneVerifyTestCase(unittest.TestCase):
             assert pn == phone_return["CleanNumber"]
             assert False == phone_return["Wireless"]
 
+    def testInvalidPhoneNumber(self):
+
+        phone_numbers = ["18067e67128", "+28067867128", "28067867128"]
+        for pn in phone_numbers:
+            phone_return = self.client.service.CheckPhoneNumber(pn, self.validLicense)
+            assert False == phone_return["Valid"]
+            cleanPn = pn
+            if pn[0] == '+':
+                cleanPn = pn[1:]
+            assert pn == phone_return["OriginalNumber"]
+            assert cleanPn == phone_return["CleanNumber"]
+            assert False == phone_return["Wireless"]
+
     def testValidAreaCode(self):
         validAreaCodes = ["806"] #a long list of existing area codes
 
