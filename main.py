@@ -3,26 +3,13 @@ from suds.client import Client
 
 class PhoneVerifyTestCase(unittest.TestCase):
 
+    wsdl_url = 'http://ws.cdyne.com/phoneverify/phoneverify.asmx?wsdl'
+    client = Client(url=wsdl_url)
 
-    def setUp(self):
-        """Call before every test case."""
-        print("1. Setup parameters")
-
-        self.wsdl_url = 'http://ws.cdyne.com/phoneverify/phoneverify.asmx?wsdl'
-
-        self.client = Client(url=self.wsdl_url)
-
-        self.validPhoneNumber = "+18067867128"
-        self.invalidPhoneNumber = "this-is-invalid-number"
-        self.validLicense = "my-key"
-        self.invalidLicense = "in-valid-license-string"
-
-
-    def tearDown(self):
-
-        """Call after every test case."""
-        ##self.file.close()
-        print("2. Destroy instances")
+    validPhoneNumber = "+18067867128"
+    invalidPhoneNumber = "this-is-invalid-number"
+    validLicense = "my-key"
+    invalidLicense = "in-valid-license-string"
 
     # ## Case X5 - the wsdl suddenly working without license, so the license parameter becomes redundant
     def testInvalidLicense(self):
@@ -38,9 +25,9 @@ class PhoneVerifyTestCase(unittest.TestCase):
 
         phone_return = self.client.service.CheckPhoneNumber(self.validPhoneNumber, self.validLicense)
 
-        assert "NEW CINGULAR WIRELESS PCS, LLC" == phone_return["Company"].upper()
+        assert "NEW CINGULAR WIRELESS PCS, LLC" == phone_return["Company"]
         assert True == phone_return["Valid"]
-        assert "Assigned to a code holder for normal use.".upper() == phone_return["Use"].upper()
+        assert "Assigned to a code holder for normal use." == phone_return["Use"]
         assert "TX"== phone_return["State"]
         assert "LUBBOCK" == phone_return["RC"]
         assert "6534" == phone_return["OCN"]
@@ -79,7 +66,7 @@ class PhoneVerifyTestCase(unittest.TestCase):
         validAreaCodes = ["806"] #a long list of existing area codes
 
         for area in validAreaCodes:
-            validPhoneNumber = self.getPhoneNumberWithAreaCode(self, area)
+            validPhoneNumber = self.getPhoneNumberWithAreaCode(area)
             phone_return = self.client.service.CheckPhoneNumber(validPhoneNumber, self.validLicense)
             assert "NEW CINGULAR WIRELESS PCS, LLC" == phone_return["Company"].upper()
             assert True == phone_return["Valid"]
