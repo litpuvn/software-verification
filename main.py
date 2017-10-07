@@ -7,6 +7,8 @@ class PhoneVerifyTestCase(unittest.TestCase):
     client = Client(url=wsdl_url)
 
     validPhoneNumber = "+18067867128"
+    cleanValidPhoneNumber = "8067867128"
+
     invalidPhoneNumber = "this-is-invalid-number"
     validLicense = "my-key"
     invalidLicense = "in-valid-license-string"
@@ -17,7 +19,7 @@ class PhoneVerifyTestCase(unittest.TestCase):
         assert "Please Purchase a license key or email us for a test key." == phone_return["Company"]
         assert False == phone_return["Valid"]
         assert self.validPhoneNumber == phone_return["OriginalNumber"]
-        assert self.validPhoneNumber == phone_return["CleanNumber"]
+        assert self.cleanValidPhoneNumber == phone_return["CleanNumber"]
         assert False == phone_return["Wireless"]
 
     def testValidPhoneLength(self):
@@ -32,7 +34,7 @@ class PhoneVerifyTestCase(unittest.TestCase):
         assert "LUBBOCK" == phone_return["RC"]
         assert "6534" == phone_return["OCN"]
         assert self.validPhoneNumber == phone_return["OriginalNumber"]
-        assert self.validPhoneNumber == phone_return["CleanNumber"]
+        assert self.cleanValidPhoneNumber == phone_return["CleanNumber"]
         assert ""== phone_return["SwitchName"]
         assert ""== phone_return["SwitchType"]
         assert "United States" == phone_return["Country"]
@@ -50,7 +52,7 @@ class PhoneVerifyTestCase(unittest.TestCase):
         assert "33.5024"== phone_return["Lat"]
         assert "-101.8777"== phone_return["Long"]
         assert True == phone_return["Wireless"]
-        assert self.validPhoneNumber == phone_return["LRN"]
+        assert self.cleanValidPhoneNumber == phone_return["LRN"]
 
     def testInvalidPhoneNumberLength(self):
 
@@ -66,16 +68,16 @@ class PhoneVerifyTestCase(unittest.TestCase):
         validAreaCodes = ["806"] #a long list of existing area codes
 
         for area in validAreaCodes:
-            validPhoneNumber = self.getPhoneNumberWithAreaCode(area)
-            phone_return = self.client.service.CheckPhoneNumber(validPhoneNumber, self.validLicense)
+            validPN = self.getPhoneNumberWithAreaCode(area)
+            phone_return = self.client.service.CheckPhoneNumber(validPN, self.validLicense)
             assert "NEW CINGULAR WIRELESS PCS, LLC" == phone_return["Company"].upper()
             assert True == phone_return["Valid"]
             assert "Assigned to a code holder for normal use.".upper() == phone_return["Use"].upper()
             assert "TX" == phone_return["State"]
             assert "LUBBOCK" == phone_return["RC"]
             assert "6534" == phone_return["OCN"]
-            assert validPhoneNumber == phone_return["OriginalNumber"]
-            assert validPhoneNumber == phone_return["CleanNumber"]
+            assert validPN == phone_return["OriginalNumber"]
+            assert validPN == phone_return["CleanNumber"]
             assert "" == phone_return["SwitchName"]
             assert "" == phone_return["SwitchType"]
             assert "United States" == phone_return["Country"]
@@ -93,7 +95,7 @@ class PhoneVerifyTestCase(unittest.TestCase):
             assert "33.5024" == phone_return["Lat"]
             assert "-101.8777" == phone_return["Long"]
             assert True == phone_return["Wireless"]
-            assert validPhoneNumber == phone_return["LRN"]
+            assert validPN == phone_return["LRN"]
 
 
     def testInvalidAreaCode(self):
