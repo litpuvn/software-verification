@@ -24,7 +24,6 @@ class PhonesVerifyTestCase(unittest.TestCase):
 
     ## CASE 13
     def testValidPhonesArray(self):
-        print("Running test case with valid phone length = 10")
 
         validNumbers = ["8067867128"]
 
