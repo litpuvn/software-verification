@@ -13,14 +13,14 @@ class PhoneVerifyTestCase(unittest.TestCase):
     validLicense = "my-key"
     invalidLicense = "in-valid-license-string"
 
-    # ## Case 10
-    # def testInvalidLicense(self):
-    #     phone_return = self.client.service.CheckPhoneNumber(self.validPhoneNumber, self.invalidLicense)
-    #     assert "Please Purchase a license key or email us for a test key." == phone_return["Company"]
-    #     assert False == phone_return["Valid"]
-    #     assert self.validPhoneNumber == phone_return["OriginalNumber"]
-    #     assert self.cleanValidPhoneNumber == phone_return["CleanNumber"]
-    #     assert False == phone_return["Wireless"]
+    ## Case 10
+    def testInvalidLicense(self):
+        phone_return = self.client.service.CheckPhoneNumber(self.validPhoneNumber, self.invalidLicense)
+        assert "Please Purchase a license key or email us for a test key." == phone_return["Company"]
+        assert False == phone_return["Valid"]
+        assert self.validPhoneNumber == phone_return["OriginalNumber"]
+        assert self.cleanValidPhoneNumber == phone_return["CleanNumber"]
+        assert False == phone_return["Wireless"]
 
     ## CASE 1,2 ,3
     def testValidPhoneLength(self):
