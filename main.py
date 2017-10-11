@@ -14,13 +14,13 @@ class PhoneVerifyTestCase(unittest.TestCase):
     invalidLicense = "in-valid-license-string"
 
     # ## Case 10
-    def testInvalidLicense(self):
-        phone_return = self.client.service.CheckPhoneNumber(self.validPhoneNumber, self.invalidLicense)
-        assert "Please Purchase a license key or email us for a test key." == phone_return["Company"]
-        assert False == phone_return["Valid"]
-        assert self.validPhoneNumber == phone_return["OriginalNumber"]
-        assert self.cleanValidPhoneNumber == phone_return["CleanNumber"]
-        assert False == phone_return["Wireless"]
+    # def testInvalidLicense(self):
+    #     phone_return = self.client.service.CheckPhoneNumber(self.validPhoneNumber, self.invalidLicense)
+    #     assert "Please Purchase a license key or email us for a test key." == phone_return["Company"]
+    #     assert False == phone_return["Valid"]
+    #     assert self.validPhoneNumber == phone_return["OriginalNumber"]
+    #     assert self.cleanValidPhoneNumber == phone_return["CleanNumber"]
+    #     assert False == phone_return["Wireless"]
 
     ## CASE 1,2 ,3
     def testValidPhoneLength(self):
@@ -79,6 +79,8 @@ class PhoneVerifyTestCase(unittest.TestCase):
             cleanPn = pn
             if pn[0] == '+':
                 cleanPn = pn[1:]
+            elif pn[5] == 'e':
+                cleanPn = pn[0:5] + pn[6:]
             assert pn == phone_return["OriginalNumber"]
             assert cleanPn == phone_return["CleanNumber"]
             assert False == phone_return["Wireless"]
@@ -90,9 +92,9 @@ class PhoneVerifyTestCase(unittest.TestCase):
         for area in validAreaCodes:
             validPN = self.getPhoneNumberWithAreaCode(area)
             phone_return = self.client.service.CheckPhoneNumber(validPN, self.validLicense)
-            assert "NEW CINGULAR WIRELESS PCS, LLC" == phone_return["Company"].upper()
+            assert "NEW CINGULAR WIRELESS PCS, LLC" == phone_return["Company"]
             assert True == phone_return["Valid"]
-            assert "Assigned to a code holder for normal use.".upper() == phone_return["Use"].upper()
+            assert "Assigned to a code holder for normal use." == phone_return["Use"]
             assert "TX" == phone_return["State"]
             assert "LUBBOCK" == phone_return["RC"]
             assert "6534" == phone_return["OCN"]
