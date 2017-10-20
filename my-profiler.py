@@ -5,20 +5,7 @@ my_program_code = "my-program.py"
 code = open(my_program_code).read()
 
 tree = ast.parse(code)
-# for statement in tree.body:
-#     print (ast.dump(statement), '\n')
 
-
-# class FunctionCallVisitor(ast.NodeVisitor):
-#     def visit_Assign(self, node):
-#         print("Assign :")
-#         ast.NodeVisitor.generic_visit(self, node)
-#
-#     def visit_Expr(self, node):
-#         print("Expr :")
-#         ast.NodeVisitor.generic_visit(self, node)
-
-# FunctionCallVisitor().visit(tree)
 
 class MyTransformer(ast.NodeTransformer):
     # def visit_Call(self, node):
@@ -44,27 +31,43 @@ class MyTransformer(ast.NodeTransformer):
     #     print("Print :")
     #     ast.NodeVisitor.generic_visit(self, node)
 
+    def append_print_line(self, node):
+
+        new_code = astunparse.unparse(node)
+
+        line_number = str(node.lineno)
+        # new_code += "\nprint('running line', 2)\n"
+        new_code += "\nprint('running line'," + line_number + ")\n"
+
+        new_node = ast.parse(new_code)
+
+        ast.copy_location(new_node, node)
+        ast.fix_missing_locations(new_node)
+
+        return new_node
+
+
     def visit_Assign(self, node):
-        print("Transform Assign :")
 
-        #import_node = ast.Import(names=[ast.alias(name='quux', asname=None)])
-
-        #assign_node = ast.Assign(targets=[ast.Name(id='eggs', ctx=ast.Store())], value=ast.Str(s='ham'))
-        #value = Call(func=Name(id='open', ctx=Load())
-
-        # call_node = ast.Call(func=ast.Name(id='print', ctx=ast.Load()), args=[ast.Str(s='Line number is: '), ast.Num(n=1)], keywords=[])
-        #
-        # node.append(call_node)
-        #ast.fix_missing_locations(node)
-
-        return node
+        return self.append_print_line(node)
 
     def visit_Call(self, node):
-        print(ast.dump(node))
-        return node
 
+        return self.append_print_line(node)
+
+
+# tree = ParentChildNodeTransformer().visit(tree)
+# print(astunparse.unparse(tree))
+
+print("***************** New Tree ****************")
 
 MyTransformer().visit(tree)
 
+ast.fix_missing_locations(tree)
 
 print(astunparse.unparse(tree))
+
+# with open('my-intrumented-program.py', 'w') as file:
+#     file.write(astunparse.unparse(tree))
+
+print("Done and Bye!")
