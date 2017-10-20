@@ -14,16 +14,19 @@ def do_integer_multiplication(a, b):
 
     return a*b
 
+arg_len = len(sys.argv)
 
-if len(sys.argv) > 1:
+if  arg_len > 1:
     try:
         multiplier = int(sys.argv[1])
     except:
-        multiplier = len(sys.argv)
+        multiplier = arg_len
+
     my_number = do_integer_multiplication(4, multiplier)
 
 
 else:
-    do_integer_multiplication(4, 1)
+    my_number = do_integer_multiplication(4, 1)
 
+print("My number is", my_number)
 print("Bye")
