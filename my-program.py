@@ -28,3 +28,5 @@ if len(sys.argv) > 1:
 else:
     print("Do default multiplication")
     do_integer_multiplication(4, 1)
+
+print("Bye")
