@@ -45,6 +45,9 @@ class MyTransformer(ast.NodeTransformer):
         if isinstance(node.parent, ast.Compare):
             return node
 
+        if isinstance(node.parent, ast.For):
+            return node
+
         new_code = astunparse.unparse(node)
 
         line_number = str(node.lineno)
@@ -58,6 +61,18 @@ class MyTransformer(ast.NodeTransformer):
 
         return new_node
 
+    def prepend_print_line(self, node):
+        new_code = astunparse.unparse(node)
+
+        line_number = str(node.lineno)
+        new_code = "\nprint('running line'," + line_number + ")\n" + new_code
+
+        new_node = ast.parse(new_code)
+
+        ast.copy_location(new_node, node)
+        ast.fix_missing_locations(new_node)
+
+        return new_node
 
     def visit_Assign(self, node):
 
@@ -67,6 +82,13 @@ class MyTransformer(ast.NodeTransformer):
 
         return self.append_print_line(node)
 
+    def visit_If(self, node):
+
+        return self.prepend_print_line(node)
+
+    def visit_Expr(self, node):
+
+        return self.append_print_line(node)
 
 tree = ParentChildNodeTransformer().visit(tree)
 print("***************** New Tree ****************")
