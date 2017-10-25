@@ -14,17 +14,19 @@ def do_integer_multiplication(a, b):
 
     return a*b
 
-arg_len = len(sys.argv)
-
-if  arg_len > 1:
+if  len(sys.argv) > 1:
     try:
         multiplier = int(sys.argv[1])
     except:
-        multiplier = arg_len
+        multiplier = 1
 
     my_number = do_integer_multiplication(4, multiplier)
 
+    total = 0
+    for i in range(0, 1):
+        total = total + i
 
+    print("Total from 0 to 1 is", total)
 else:
     my_number = do_integer_multiplication(4, 1)
 
