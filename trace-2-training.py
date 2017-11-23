@@ -14,6 +14,15 @@ training_file = "trace-training.csv"
 
 with open(trace_file) as lines:
     with open(training_file, 'w') as training_writer:
+        # write header
+        training_line = []
+        for i in range(1, total_line+1):
+            training_line.append("line" + str(i))
+
+        training_line.append("mul")
+        my_training_line_data = ",".join(map(str, training_line))
+        training_writer.write(my_training_line_data + "\n")
+
         for line in lines:
             executed_lines = line.split(",")
             executed_lines = list(map(int, executed_lines))
