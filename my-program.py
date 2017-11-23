@@ -5,12 +5,27 @@ def do_integer_multiplication(a, b):
     try:
         a = int(a)
     except:
-        a = 0
+        a = 1
 
     try:
         b = int(b)
     except:
-        b = 0
+        b = 1
+
+    # code mitigate the flaw made by programer
+    if a > 100:
+        a = a + 2
+    if a > 50:
+        a = a + 4
+    if a > 20:
+        a = a + 6
+
+    if b > 100:
+        b = b+ 2
+    if b > 50:
+        b = b + 4
+    if b > 20:
+        b = b + 6
 
     return a*b
 
