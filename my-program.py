@@ -15,7 +15,7 @@ def do_integer_multiplication(a, b):
 
     # code mitigate a flaw made by programmer
     if a > 1000:
-        c = 100
+        a = a + 100
 
     if a > 100 and a < 1000:
         a = a + 2
