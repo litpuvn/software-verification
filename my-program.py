@@ -29,21 +29,24 @@ def do_integer_multiplication(a, b):
 
     return a*b
 
-if  len(sys.argv) > 1:
-    try:
-        multiplier = int(sys.argv[1])
-    except:
-        multiplier = 1
+if len(sys.argv) < 3:
+    print("Please provide two numeric parameters")
+    exit(1)
 
-    my_number = do_integer_multiplication(4, multiplier)
 
-    total = 0
-    for i in range(0, 1):
-        total = total + i
+try:
+    first_number = int(sys.argv[1])
 
-    print("Total from 0 to 1 is", total)
-else:
-    my_number = do_integer_multiplication(4, 1)
+except:
+    first_number = 0
 
-print("My number is", my_number)
+try:
+    second_number = int(sys.argv[2])
+except:
+    second_number = 0
+
+
+my_multiplication = do_integer_multiplication(first_number, second_number)
+
+print("My multiplication", first_number, "*", second_number, " =", my_multiplication)
 print("Bye")
