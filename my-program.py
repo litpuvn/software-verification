@@ -1,6 +1,7 @@
 
 import sys
 
+
 def do_integer_multiplication(a, b):
     try:
         a = int(a)
@@ -12,7 +13,7 @@ def do_integer_multiplication(a, b):
     except:
         b = 1
 
-    # code mitigate the flaw made by programer
+    # code mitigate a flaw made by programmer
     if a > 100:
         a = a + 2
     if a > 50:
@@ -29,10 +30,10 @@ def do_integer_multiplication(a, b):
 
     return a*b
 
+
 if len(sys.argv) < 3:
     print("Please provide two numeric parameters")
     exit(1)
-
 
 try:
     first_number = int(sys.argv[1])
