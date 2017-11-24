@@ -1,7 +1,10 @@
 library("e1071")
 
 
-setwd("/home/hoanglong/TTU-SOURCES/software-verification")
+#setwd("/home/hoanglong/TTU-SOURCES/software-verification")
+
+setwd("/home/long/TTU-SOURCES/software-verification")
+
 
 training <- read.csv("trace-training.csv", header = TRUE)
 
