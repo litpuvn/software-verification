@@ -8,9 +8,9 @@ setwd("/home/long/TTU-SOURCES/software-verification")
 
 training <- read.csv("trace-training.csv", header = TRUE)
 
-#attach(training)
+attach(training)
 
-row_split_train_and_test = 8
+row_split_train_and_test = 10
 
 x <- subset(training, select=-mul)
 x = x[1:row_split_train_and_test,]
